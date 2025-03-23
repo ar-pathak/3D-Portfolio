@@ -1,49 +1,57 @@
-import { Suspense } from 'react'
-import { Provider } from 'react-redux'
-import { store } from './store/index'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ThemeProvider } from './context/ThemeContext'
+import Header from './components/layout/Header'
+import Footer from './components/layout/Footer'
 import Hero from './components/sections/Hero'
 import About from './components/sections/About'
 import Projects from './components/sections/Projects'
 import Contact from './components/sections/Contact'
-import Header from './components/layout/Header'
-import Footer from './components/layout/Footer'
+import ProjectsPage from './pages/Projects'
 import CustomCursor from './components/3d/CustomCursor'
 import ScrollProgress from './components/3d/ScrollProgress'
-import { SceneManager } from './components/3d/SceneManager'
-import { Workspace } from './components/3d/Workspace'
-import ProjectShowcase from './components/3d/ProjectShowcase'
 import WebXRScene from './components/3d/WebXRScene'
 import LoadingScreen from './components/3d/LoadingScreen'
-import { ThemeProvider } from './context/ThemeContext'
+import { useTheme } from './context/ThemeContext'
+
+function AppContent() {
+  const { isDarkMode } = useTheme()
+  
+  return (
+    <div className={`relative w-full min-h-screen overflow-x-hidden ${
+      isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
+    }`}>
+      <CustomCursor />
+      <ScrollProgress />
+      <Header />
+      <main className="relative z-10">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <About />
+                <Projects />
+                <Contact />
+              </>
+            }
+          />
+          <Route path="/projects" element={<ProjectsPage />} />
+        </Routes>
+      </main>
+      <Footer />
+      <WebXRScene />
+    </div>
+  )
+}
 
 function App() {
   return (
-    <ThemeProvider>
-      <Provider store={store}>
-        <div className="relative w-full min-h-screen overflow-x-hidden bg-black text-white">
-          <CustomCursor />
-          <ScrollProgress />
-          <Header />
-          <main className="relative z-10">
-            <Suspense fallback={<LoadingScreen />}>
-              <div className="fixed inset-0 z-0">
-                <SceneManager>
-                  <Workspace />
-                </SceneManager>
-              </div>
-              <div className="relative z-10">
-                <Hero />
-                <About />
-                <ProjectShowcase />
-                <Contact />
-              </div>
-            </Suspense>
-          </main>
-          <Footer />
-          <WebXRScene />
-        </div>
-      </Provider>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </Router>
   )
 }
 
