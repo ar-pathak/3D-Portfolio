@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
-import { useTheme } from '../../context/ThemeContext'
+import { useTheme } from '../../hooks/useTheme'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)

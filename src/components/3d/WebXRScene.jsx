@@ -1,19 +1,30 @@
-import { useEffect, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { VRButton, XR, Controllers, Hands } from '@react-three/xr'
-import { Environment, OrbitControls } from '@react-three/drei'
 import { Suspense } from 'react'
+import { Canvas } from '@react-three/fiber'
+import { XR, Controllers, Hands } from '@react-three/xr'
+import VRButton from './vr/VRButton'
+import VRObjects from './vr/VRObjects'
+import VREnvironment from './vr/VREnvironment'
+import LoadingState from '../common/LoadingState'
+import ErrorState from '../common/ErrorState'
+import useVRSupport from '../../hooks/useVRSupport'
 
-const VRScene = () => {
-  const [isVRSupported, setIsVRSupported] = useState(false)
+const VRContent = () => (
+  <Suspense fallback={<LoadingState />}>
+    <VREnvironment />
+    <VRObjects />
+  </Suspense>
+)
 
-  useEffect(() => {
-    if ('xr' in navigator) {
-      navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
-        setIsVRSupported(supported)
-      })
-    }
-  }, [])
+const WebXRScene = () => {
+  const { isVRSupported, isVRInitialized, error, retryInitialization } = useVRSupport()
+
+  if (error) {
+    return <ErrorState message={error} onRetry={retryInitialization} />
+  }
+
+  if (!isVRInitialized) {
+    return <LoadingState />
+  }
 
   if (!isVRSupported) {
     return (
@@ -25,40 +36,37 @@ const VRScene = () => {
 
   return (
     <div className="h-screen w-full">
-      <Canvas>
+      <Canvas
+        camera={{ position: [0, 1.6, 3], fov: 75 }}
+        shadows
+        dpr={[1, 2]}
+        gl={{
+          antialias: false,
+          alpha: false,
+          powerPreference: 'high-performance',
+          xrCompatible: true
+        }}
+      >
         <XR>
           <Controllers />
           <Hands />
-          <Suspense fallback={null}>
-            <Environment preset="sunset" />
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} />
-            <mesh>
-              <boxGeometry args={[1, 1, 1]} />
-              <meshStandardMaterial color="#64ffda" />
-            </mesh>
-            <OrbitControls />
-          </Suspense>
+          <VRContent />
         </XR>
       </Canvas>
       <VRButton
-        className="absolute bottom-4 right-4"
-        style={{
-          position: 'absolute',
-          bottom: '1rem',
-          right: '1rem',
-          padding: '0.5rem 1rem',
-          border: 'none',
-          borderRadius: '0.5rem',
-          background: '#64ffda',
-          color: '#0a192f',
-          cursor: 'pointer',
-          fontSize: '1rem',
-          fontWeight: 'bold',
+        onClick={() => {
+          try {
+            const vrButton = document.querySelector('button.VRButton')
+            if (vrButton) {
+              vrButton.click()
+            }
+          } catch (err) {
+            console.error('Failed to enter VR:', err)
+          }
         }}
       />
     </div>
   )
 }
 
-export default VRScene 
+export default WebXRScene 

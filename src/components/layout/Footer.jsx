@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useTheme } from '../../context/ThemeContext'
+import { useTheme } from '../../hooks/useTheme'
 import { socialLinks, footerLinks } from '../../constants/projects.jsx'
 
 const Footer = () => {
