@@ -6,7 +6,7 @@ export const projects = [
     title: "3D Portfolio Website",
     description: "A modern portfolio website built with React and Three.js",
     tech: ["React", "Three.js", "TailwindCSS"],
-    image: "https://via.placeholder.com/400x300?text=3D+Portfolio",
+    image: "/project1.jpg",
     github: "https://github.com/arsanpathak/portfolio",
     demo: "https://arsanpathak.com"
   },
@@ -15,7 +15,7 @@ export const projects = [
     title: "Interactive Dashboard",
     description: "Real-time data visualization dashboard with 3D elements",
     tech: ["React", "D3.js", "WebGL"],
-    image: "https://via.placeholder.com/400x300?text=Dashboard",
+    image: "/project2.jpg",
     github: "https://github.com/arsanpathak/dashboard",
     demo: "https://dashboard.arsanpathak.com"
   },
@@ -24,7 +24,7 @@ export const projects = [
     title: "3D Game Experience",
     description: "Browser-based 3D game with physics and animations",
     tech: ["Three.js", "Cannon.js", "React"],
-    image: "https://via.placeholder.com/400x300?text=3D+Game",
+    image: "/project3.jpg",
     github: "https://github.com/arsanpathak/game",
     demo: "https://game.arsanpathak.com"
   }

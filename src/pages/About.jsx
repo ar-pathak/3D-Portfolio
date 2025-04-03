@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useTheme } from '../../hooks/useTheme'
+import { useTheme } from '../hooks/useTheme'
 
 const About = () => {
   const { isDarkMode } = useTheme()
@@ -16,18 +16,17 @@ const About = () => {
   ]
 
   return (
-    <section id="about" className={`py-24 ${isDarkMode ? 'bg-gradient-to-b from-gray-900 to-black' : 'bg-gradient-to-b from-white to-gray-50'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-gradient-to-b from-gray-900 via-gray-800 to-black' : 'bg-gradient-to-b from-gray-50 via-white to-gray-100'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+          <h1 className="text-5xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
             About Me
-          </h2>
+          </h1>
           <p className={`text-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Passionate about creating immersive digital experiences
           </p>
@@ -37,8 +36,7 @@ const About = () => {
           {/* About Text */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
@@ -60,7 +58,7 @@ const About = () => {
               <motion.a
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                href="#contact"
+                href="/contact"
                 className={`px-8 py-4 rounded-xl font-medium text-center ${
                   isDarkMode
                     ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700'
@@ -87,8 +85,7 @@ const About = () => {
           {/* Skills */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className={`p-8 rounded-2xl backdrop-blur-sm ${
               isDarkMode ? 'bg-gray-800/50 border border-gray-700' : 'bg-white/50 border border-gray-200'
@@ -102,8 +99,7 @@ const About = () => {
                 <motion.div
                   key={skill.name}
                   initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="group"
                 >
@@ -125,8 +121,7 @@ const About = () => {
                   }`}>
                     <motion.div
                       initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true }}
+                      animate={{ width: `${skill.level}%` }}
                       transition={{ duration: 1, delay: index * 0.1 }}
                       className={`h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500 group-hover:from-blue-400 group-hover:to-purple-400 transition-all duration-300`}
                     />
@@ -137,7 +132,7 @@ const About = () => {
           </motion.div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 

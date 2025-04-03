@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useTheme } from '../../hooks/useTheme'
+import { useTheme } from '../../context/ThemeContext'
 
 const LoadingSpinner = ({ size = 'medium', fullScreen = false }) => {
   const { isDarkMode } = useTheme()
